@@ -29,7 +29,7 @@ services:
       builder: nodejs
       buildCommand: npm install && npm run build
     run:
-      command: npm run start
+      command: npm start
       ports:
         - port: 8000
           protocol: http 
