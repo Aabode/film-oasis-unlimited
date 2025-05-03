@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark theme by default for movie site */
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 262 80% 75%; /* primary purple */
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 24 95% 53%; /* bright orange for accent */
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 262 80% 75%;
+    --radius: 0.75rem;
+
+    --sidebar-background: 240 10% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 262 80% 75%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 262 80% 75%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border selection:bg-primary/20 selection:text-white;
+  }
+  
+  body {
+    @apply bg-dark-charcoal text-foreground antialiased overflow-x-hidden;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+}
+
+@layer utilities {
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .movie-card {
+    @apply bg-dark-purple/80 backdrop-blur-sm border border-white/10 rounded-lg transition-all duration-300 hover:shadow-md hover:shadow-primary/20 hover:-translate-y-1;
+  }
+  
+  .movie-card-featured {
+    @apply bg-gradient-to-br from-dark-purple to-dark-charcoal backdrop-blur-sm border border-white/10 rounded-lg overflow-hidden;
+  }
+  
+  .backdrop-blur-card {
+    @apply backdrop-blur-xl bg-dark-purple/30 border border-white/10 shadow-lg;
+  }
+  
+  .text-gradient {
+    @apply bg-gradient-to-br from-white via-white/90 to-white/70 bg-clip-text text-transparent;
+  }
+  
+  .primary-gradient {
+    @apply bg-gradient-to-br from-primary-purple via-secondary-purple to-tertiary-purple;
+  }
+  
+  .primary-button {
+    @apply bg-primary-purple hover:bg-primary-purple/90 text-white px-4 py-2 rounded-md transition-all;
+  }
+  
+  .secondary-button {
+    @apply bg-dark-purple hover:bg-dark-purple/90 text-white border border-primary-purple/30 px-4 py-2 rounded-md transition-all;
+  }
+
+  .neon-glow {
+    box-shadow: 0 0 10px theme('colors.primary-purple'), 0 0 20px theme('colors.primary-purple/30');
+  }
+}
