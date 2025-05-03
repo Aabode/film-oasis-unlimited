@@ -1,0 +1,35 @@
+name: film-oasis
+services:
+  - name: web
+    type: web
+    ports:
+      - port: 8000
+        protocol: http
+    routes:
+      - path: /
+        protocol: http
+    env:
+      - name: NODE_ENV
+        value: production
+      - name: PORT
+        value: "8000"
+      - name: VITE_API_URL
+        value: https://film-oasis-api.koyeb.app
+      - name: DB_HOST
+        value: db.cuenixylzravencpaoio.supabase.co
+      - name: DB_PORT
+        value: "5432"
+      - name: DB_NAME
+        value: postgres
+      - name: DB_USER
+        value: postgres
+      - name: DB_PASSWORD
+        value: Abode1290@
+    build:
+      builder: nodejs
+      buildCommand: npm install && npm run build
+    run:
+      command: npm run start
+      ports:
+        - port: 8000
+          protocol: http 
