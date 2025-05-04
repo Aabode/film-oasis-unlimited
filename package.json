@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "cross-env ts-node server.ts",
-    "dev:server": "cross-env nodemon --exec ts-node server.ts"
+    "dev:server": "cross-env nodemon --exec ts-node server.ts",
+    "start": "npm run build && npm run server"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
