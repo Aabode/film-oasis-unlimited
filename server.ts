@@ -57,7 +57,7 @@ app.get('/api/movies/:id', async (req, res) => {
         
         // جلب الروابط
         const linksResult = await pool.query(
-            `SELECT * FROM movie_links WHERE movie_id = $1 ORDER BY created_at DESC`,
+            'SELECT * FROM movie_links WHERE movie_id = $1 ORDER BY created_at DESC',
             [id]
         );
         
@@ -65,6 +65,7 @@ app.get('/api/movies/:id', async (req, res) => {
         movie.download_links = linksResult.rows
             .filter(link => link.type === 'download')
             .map(link => ({
+                id: link.id,
                 quality: link.quality,
                 size: link.size || '',
                 url: link.url
@@ -73,6 +74,7 @@ app.get('/api/movies/:id', async (req, res) => {
         movie.watch_links = linksResult.rows
             .filter(link => link.type === 'watch')
             .map(link => ({
+                id: link.id,
                 server: link.server || 'Server 1',
                 quality: link.quality,
                 url: link.url
@@ -181,12 +183,12 @@ app.get('/api/movies/search', async (req, res) => {
 });
 
 // مسارات روابط الأفلام
-app.get('/api/movies/:id/links', async (req, res) => {
+app.get('/api/movies/:movieId/links', async (req, res) => {
     try {
-        const { id } = req.params;
+        const { movieId } = req.params;
         const result = await pool.query(
-            `SELECT * FROM movie_links WHERE movie_id = $1 ORDER BY created_at DESC`,
-            [id]
+            'SELECT * FROM movie_links WHERE movie_id = $1 ORDER BY created_at DESC',
+            [movieId]
         );
         
         // تنظيم الروابط حسب نوعها
