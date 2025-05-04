@@ -9,10 +9,11 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "cross-env ts-node server.ts",
-    "dev:server": "cross-env nodemon --exec ts-node server.ts",
+    "server": "ts-node server.ts",
+    "dev:server": "nodemon --exec ts-node server.ts",
     "start": "node dist/server.js",
-    "heroku-postbuild": "npm install && npm run build"
+    "heroku-postbuild": "npm install && npm run build",
+    "postinstall": "npm run build"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

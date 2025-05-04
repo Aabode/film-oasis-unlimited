@@ -1,21 +1,21 @@
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
-const { Pool } = require('pg');
 const path = require('path');
-
-dotenv.config();
+const { Pool } = require('pg');
 
 const app = express();
 const port = process.env.PORT || 8000;
 
-// تكوين الاتصال بقاعدة البيانات
+app.use(cors());
+app.use(express.json());
+
+// Serve static files from the dist directory
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Database configuration
 const pool = new Pool({
-    user: 'postgres',
-    host: 'db.cuenixylzravencpaoio.supabase.co',
-    database: 'postgres',
-    password: 'Abode1290@',
-    port: 5432,
+  connectionString: process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/film_oasis',
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
 // اختبار الاتصال
@@ -27,13 +27,6 @@ pool.connect((err, client, release) => {
     console.log('تم الاتصال بقاعدة البيانات بنجاح');
     release();
 });
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// خدمة الملفات الثابتة
-app.use(express.static(path.join(__dirname, 'dist')));
 
 // المسار الافتراضي
 app.get('/', (req, res) => {
@@ -329,6 +322,11 @@ app.get('/api/statistics', async (req, res) => {
     console.error('Error fetching statistics:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+// Serve index.html for all other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 // تشغيل الخادم
