@@ -22,7 +22,7 @@ const pool = new Pool({
 pool.connect((err, client, release) => {
     if (err) {
         console.error('خطأ في الاتصال بقاعدة البيانات:', err);
-        return;
+        process.exit(1); // إنهاء التطبيق في حالة فشل الاتصال
     }
     console.log('تم الاتصال بقاعدة البيانات بنجاح');
     release();
@@ -44,6 +44,30 @@ app.get('/api/movies', async (req, res) => {
     }
 });
 
+// مسار البحث يجب أن يكون قبل مسار :id
+app.get('/api/movies/search', async (req, res) => {
+    try {
+        const { q } = req.query;
+        if (!q) {
+            return res.status(400).json({ error: 'Search query is required' });
+        }
+        const searchTerm = `%${q}%`;
+        
+        const result = await pool.query(
+            `SELECT * FROM movies 
+            WHERE title ILIKE $1 OR title_ar ILIKE $1 OR description ILIKE $1 OR description_ar ILIKE $1
+            ORDER BY created_at DESC`,
+            [searchTerm]
+        );
+        
+        res.json(result.rows);
+    } catch (error) {
+        console.error('Error searching movies:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// باقي المسارات
 app.get('/api/movies/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -159,25 +183,6 @@ app.delete('/api/movies/:id', async (req, res) => {
         res.json({ message: 'Movie deleted successfully' });
     } catch (error) {
         console.error('Error deleting movie:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
-app.get('/api/movies/search', async (req, res) => {
-    try {
-        const { q } = req.query;
-        const searchTerm = `%${q}%`;
-        
-        const result = await pool.query(
-            `SELECT * FROM movies 
-            WHERE title ILIKE $1 OR title_ar ILIKE $1 OR description ILIKE $1 OR description_ar ILIKE $1
-            ORDER BY created_at DESC`,
-            [searchTerm]
-        );
-        
-        res.json(result.rows);
-    } catch (error) {
-        console.error('Error searching movies:', error);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
