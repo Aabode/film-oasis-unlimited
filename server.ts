@@ -1,7 +1,12 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const { Pool } = require('pg');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import { Pool } from 'pg';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -44,7 +49,7 @@ app.get('/api/movies', async (req, res) => {
     }
 });
 
-// مسار البحث يجب أن يكون قبل مسار :id
+// مسار البحث
 app.get('/api/movies/search', async (req, res) => {
     try {
         const { q } = req.query;
@@ -54,9 +59,7 @@ app.get('/api/movies/search', async (req, res) => {
         const searchTerm = `%${q}%`;
         
         const result = await pool.query(
-            `SELECT * FROM movies 
-            WHERE title ILIKE $1 OR title_ar ILIKE $1 OR description ILIKE $1 OR description_ar ILIKE $1
-            ORDER BY created_at DESC`,
+            'SELECT * FROM movies WHERE title ILIKE $1 OR title_ar ILIKE $1 OR description ILIKE $1 OR description_ar ILIKE $1 ORDER BY created_at DESC',
             [searchTerm]
         );
         
@@ -67,8 +70,8 @@ app.get('/api/movies/search', async (req, res) => {
     }
 });
 
-// باقي المسارات
-app.get('/api/movies/:id', async (req, res) => {
+// مسار فيلم محدد
+app.get('/api/movies/:id([0-9]+)', async (req, res) => {
     try {
         const { id } = req.params;
         const movieResult = await pool.query('SELECT * FROM movies WHERE id = $1', [id]);
