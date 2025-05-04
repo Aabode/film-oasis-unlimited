@@ -2,6 +2,8 @@ services:
   - type: web
     name: film-oasis
     env: node
+    region: oregon
+    plan: free
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
@@ -9,5 +11,24 @@ services:
         value: production
       - key: DATABASE_URL
         sync: false
+      - key: PORT
+        value: 10000
     healthCheckPath: /
-    autoDeploy: true 
+    autoDeploy: true
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-XSS-Protection
+        value: 1; mode=block
+      - path: /*
+        name: Strict-Transport-Security
+        value: max-age=31536000; includeSubDomains
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html 
