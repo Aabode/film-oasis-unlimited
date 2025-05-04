@@ -6,14 +6,14 @@ const { Pool } = require('pg');
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 
 // تكوين الاتصال بقاعدة البيانات
 const pool = new Pool({
     user: 'postgres',
-    host: 'localhost',
-    database: 'film_oasis',
-    password: 'abode1290',
+    host: 'db.cuenixylzravencpaoio.supabase.co',
+    database: 'postgres',
+    password: 'Abode1290',
     port: 5432,
 });
 
