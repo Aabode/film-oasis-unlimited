@@ -1,15 +1,12 @@
 import { Pool } from 'pg';
 
-// تكوين الاتصال بقاعدة البيانات Supabase
+// تكوين الاتصال بقاعدة البيانات
 const pool = new Pool({
     user: 'postgres',
-    host: 'db.cuenixylzravencpaoio.supabase.co',
-    database: 'postgres',
-    password: 'Abode1290',
+    host: 'localhost',
+    database: 'film_oasis',
+    password: 'abode1290',
     port: 5432,
-    ssl: {
-        rejectUnauthorized: false
-    }
 });
 
 // اختبار الاتصال

@@ -1,21 +1,16 @@
 {
-  "name": "film-oasis-unlimited",
+  "name": "vite_react_shadcn_ts",
   "private": true,
-  "version": "1.0.0",
-  "description": "Film Oasis Unlimited - Movie Streaming Platform",
-  "main": "server.ts",
-  "type": "module",
+  "version": "0.0.0",
+  "type": "commonjs",
   "scripts": {
-    "start": "node dist/server.js",
     "dev": "vite",
-    "build": "vite build && tsc",
+    "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "ts-node --esm server.ts",
-    "dev:server": "nodemon --exec ts-node --esm server.ts",
-    "build:server": "tsc",
-    "postinstall": "npm run build"
+    "server": "cross-env ts-node server.ts",
+    "dev:server": "cross-env nodemon --exec ts-node server.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
