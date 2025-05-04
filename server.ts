@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const { Pool } = require('pg');
+const path = require('path');
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ const pool = new Pool({
     user: 'postgres',
     host: 'db.cuenixylzravencpaoio.supabase.co',
     database: 'postgres',
-    password: 'Abode1290',
+    password: 'Abode1290@',
     port: 5432,
 });
 
@@ -30,6 +31,9 @@ pool.connect((err, client, release) => {
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// خدمة الملفات الثابتة
+app.use(express.static(path.join(__dirname, 'dist')));
 
 // المسار الافتراضي
 app.get('/', (req, res) => {
@@ -330,4 +334,4 @@ app.get('/api/statistics', async (req, res) => {
 // تشغيل الخادم
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-}); 
+});
