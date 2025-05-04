@@ -15,7 +15,6 @@
     "server": "ts-node server.ts",
     "dev:server": "nodemon --exec ts-node server.ts",
     "start": "node dist/server.js",
-    "heroku-postbuild": "npm install && npm run build",
     "postinstall": "npx update-browserslist-db@latest"
   },
   "dependencies": {
