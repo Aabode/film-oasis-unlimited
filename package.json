@@ -14,8 +14,7 @@
     "preview": "vite preview",
     "server": "ts-node server.ts",
     "dev:server": "nodemon --exec ts-node server.ts",
-    "start": "node dist/server.js",
-    "postinstall": "npx update-browserslist-db@latest"
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

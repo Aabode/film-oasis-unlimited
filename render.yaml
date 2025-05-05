@@ -10,7 +10,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        sync: false
+        value: postgresql://postgres:Abode1290%40@db.cuenixylzravencpaoio.supabase.co:5432/postgres
       - key: PORT
         value: 10000
     healthCheckPath: /

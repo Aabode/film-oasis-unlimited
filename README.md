@@ -201,8 +201,8 @@ A website for watching and downloading movies and TV shows.
 
 2. **Start UI**:
    ```bash
-   npm run dev
-   ```
+npm run dev
+```
 
 3. **Open Application**:
    - Open browser at: `http://localhost:8081`
